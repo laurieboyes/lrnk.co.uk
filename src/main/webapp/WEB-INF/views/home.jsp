@@ -5,10 +5,10 @@
       
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
       
-      <link rel="stylesheet" href="/resources/css/lrnk.css">
-      <link rel="stylesheet" href="/resources/css/skeleton/base.css">
-      <link rel="stylesheet" href="/resources/css/skeleton/skeleton.css">
-      <link rel="stylesheet" href="/resources/css/skeleton/layout.css">
+      <link rel="stylesheet" href="resources/css/lrnk.css">
+      <link rel="stylesheet" href="resources/css/skeleton/base.css">
+      <link rel="stylesheet" href="resources/css/skeleton/skeleton.css">
+      <link rel="stylesheet" href="resources/css/skeleton/layout.css">
       
       <title>Lrnk - The personal website of Laurie Boyes</title>
 
@@ -22,7 +22,7 @@
             <p class="not-quite-a-ul">Space platformer <a href="littlegreenmen.html">Little Green Men</a>, written in HTML5 and Javascript (Summer 2012)</p>
             <p class="not-quite-a-ul">Tetris clone <a href="games/LrnceTetris.jar">LrnceTetris</a>, written in Java (Spring 2010)</p>            
             <br/>
-            <img src="/resources/images/lrnk.png" alt="Lrnk"/>
+            <img src="resources/images/lrnk.png" alt="Lrnk"/>
          </div>
       </div>
    </body>
