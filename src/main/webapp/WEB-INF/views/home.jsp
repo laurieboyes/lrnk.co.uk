@@ -16,7 +16,7 @@
 <body>
    <div id="content" class="container">
       <div class="sixteen columns alpha omega">
-         <h1>Hello,</h1>
+         <h1>Hey,</h1>
          <p>Welcome to my very own brand spanking new Sprng MVC web application! Sorry, 5quidhost. Our 4-year, on/off relationship is over.</p>
          <p>I've recently made forays into the very techno-hip world of GitHub. Here's my very own <a href="https://github.com/Lrnk">GitHub Profile</a>.</p>
          <p>Additionally, please enjoy these tragically abandoned works-in-progress:</p>
