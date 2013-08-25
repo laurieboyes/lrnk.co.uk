@@ -9,25 +9,37 @@
   <packaging>war</packaging>
   <properties>
    <spring-version>3.2.4.RELEASE</spring-version>
-</properties>
+ </properties>
 
-<name>Lrnk.co.uk website</name>
+ <name>Lrnk.co.uk website</name>
 
-<build>
-    <finalName>lrnk</finalName>
- </build>
+ <build>
+  <finalName>lrnk</finalName>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.tomcat.maven</groupId>
+      <artifactId>tomcat7-maven-plugin</artifactId>
+      <version>2.1</version>
+      <configuration>
+        <url>http://localhost:8080/manager/text</url>
+        <server>LocalTomcat</server>
+        <path>/lrnk</path>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
 
 <dependencies>
-   <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${spring-version}</version>
-   </dependency>
+ <dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-context</artifactId>
+  <version>${spring-version}</version>
+</dependency>
 
-   <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${spring-version}</version>
-   </dependency>
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-webmvc</artifactId>
+  <version>${spring-version}</version>
+</dependency>
 </dependencies>
 </project>
