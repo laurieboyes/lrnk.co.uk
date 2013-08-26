@@ -9,7 +9,11 @@ public class HomeController {
  
     @RequestMapping(value = "/")
     public String home() {
-        System.out.println("HomeController: Passing through...");
         return "home";
+    }
+
+    @RequestMapping(value = "/little-green-men")
+    public String littleGreenMen() {
+        return "little-green-men";
     }
 }
