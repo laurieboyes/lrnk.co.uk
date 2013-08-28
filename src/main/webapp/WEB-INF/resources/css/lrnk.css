@@ -1,17 +1,19 @@
 body
 {
-  background-color:red;
+  background-image:url('../images/background.png');  /*www.subtlepatterns.com */
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
 #content
 {
-  background-color:white;
-  text-align: center;
-  border-radius: 100px;
+  background-color:white;  
+  text-align: center;  
   padding: 5px;
   padding-top: 10px;
+  border-radius: 50px;
+  max-width: 768px;
+  margin: auto;
 }
 
 .not-quite-a-ul {
@@ -27,4 +29,11 @@ h1 {
 p {
  padding-left:5px;
  padding-right:5px;
+}
+
+img.lrnk {
+   max-width: 150px;
+   border-radius: 20px;
+   margin-bottom: 20px;
+   margin-top: 20px;
 }
