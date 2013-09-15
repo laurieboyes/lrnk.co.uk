@@ -1,0 +1,5 @@
+# Intellij IDEA Files  & Misc Java files #
+##########################################
+.idea/
+*.iml
+target/
