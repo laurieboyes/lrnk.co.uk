@@ -16,4 +16,9 @@ public class HomeController {
     public String littleGreenMen() {
         return "little-green-men";
     }
+
+    @RequestMapping(value = "/cave")
+    public String enterTheLrnkCave() {
+        return "lrnk-cave";
+    }
 }
