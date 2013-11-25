@@ -1,101 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
+         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>uk.co.lrnk</groupId>
-  <artifactId>lrnk</artifactId>
-  <version>0.1</version>
-  <packaging>war</packaging>
-  <properties>
-   <spring-version>3.2.4.RELEASE</spring-version>
-   <spring-security-version>3.1.4.RELEASE</spring-security-version>
- </properties>
+    <groupId>uk.co.lrnk</groupId>
+    <artifactId>lrnk</artifactId>
+    <version>0.1</version>
+    <packaging>war</packaging>
+    <properties>
+        <spring-version>3.2.5.RELEASE</spring-version>
+        <spring-security-version>3.1.4.RELEASE</spring-security-version>
+    </properties>
 
- <name>Lrnk.co.uk website</name>
+    <name>Lrnk.co.uk website</name>
 
- <build>
-  <finalName>lrnk</finalName>
-</build>
-
-
-<profiles>
-
-  <profile>
-    <id>local</id>
-    <activation>
-      <activeByDefault>false</activeByDefault>
-    </activation>
     <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.1</version>
-          <configuration>
-            <url>http://localhost:8080/manager/text</url>
-            <server>LocalTomcat</server>
-            <path>/lrnk</path>
-          </configuration>
-        </plugin>
-      </plugins>
+        <finalName>lrnk</finalName>
     </build>
-  </profile>
-
-  <profile>
-    <id>prod</id>
-    <activation>
-      <activeByDefault>false</activeByDefault>
-    </activation>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.1</version>
-          <configuration>
-            <url>http://lrnk.co.uk:8080/manager/text</url>
-            <server>EC2Tomcat</server>
-            <path>/lrnk</path>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-  </profile>
-
-</profiles>
 
 
-<dependencies>
- <dependency>
-  <groupId>org.springframework</groupId>
-  <artifactId>spring-context</artifactId>
-  <version>${spring-version}</version>
-</dependency>
+    <profiles>
 
-<dependency>
-  <groupId>org.springframework</groupId>
-  <artifactId>spring-webmvc</artifactId>
-  <version>${spring-version}</version>
-</dependency>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.1</version>
+                        <configuration>
+                            <url>http://localhost:8080/manager/text</url>
+                            <server>LocalTomcat</server>
+                            <path>/lrnk</path>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-<dependency>
-  <groupId>org.springframework.security</groupId>
-  <artifactId>spring-security-core</artifactId>
-  <version>${spring-security-version}</version>
-</dependency>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.1</version>
+                        <configuration>
+                            <url>http://lrnk.co.uk:8080/manager/text</url>
+                            <server>EC2Tomcat</server>
+                            <path>/lrnk</path>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-<dependency>
-  <groupId>org.springframework.security</groupId>
-  <artifactId>spring-security-web</artifactId>
-  <version>${spring-security-version}</version>
-</dependency>
+    </profiles>
 
-<dependency>
-  <groupId>org.springframework.security</groupId>
-  <artifactId>spring-security-config</artifactId>
-  <version>${spring-security-version}</version>
-</dependency>
 
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+
+    </dependencies>
 </project>
