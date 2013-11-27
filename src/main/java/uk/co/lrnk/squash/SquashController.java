@@ -1,5 +1,8 @@
 package uk.co.lrnk.squash;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,7 +11,9 @@ import uk.co.lrnk.squash.domain.Day;
 import uk.co.lrnk.squash.domain.Session;
 import uk.co.lrnk.squash.domain.VenueDay;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,24 +23,30 @@ import java.util.List;
 @Controller("/squash")
 public class SquashController {
 
+
+    @Autowired
+    SquashCalendar squashCalendar;
+    
+    @Autowired
+    List<VenueDay> allTypicalWeekdays;
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Day> getCourtAvailability() {
-        Day monday = new Day();
+                
+        List<Day> days = new ArrayList<Day>();
         
-        VenueDay brixtonMonday = new VenueDay();
+        for(Date date : squashCalendar.getDatesInForeseeableFuture()) {
+            Day day = new Day();
+            day.setDate(date);
+            day.setName(new DateTime(date).toString(DateTimeFormat.forPattern("EEEE")));
+            
+            day.setVenues(allTypicalWeekdays);
+            
+            days.add(day);                                   
+        }
         
-        Session session1 = new Session();
-        session1.setAvailabilityKnown(true);
-        session1.setAvailableSlots(2);
-        session1.setTime("20:00 - 20:40");
-        
-        brixtonMonday.setSessions(Arrays.asList(session1));
-        
-        monday.setName("Monday");
-        monday.setVenues(Arrays.asList(brixtonMonday));
-        
-        return Arrays.asList(monday);
+        return days;
     }
     
 }

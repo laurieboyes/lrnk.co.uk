@@ -21,6 +21,15 @@
 
     <build>
         <finalName>lrnk</finalName>
+
+        <testResources>
+            <testResource>
+                <directory>src/main/webapp/WEB-INF</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources/</directory>
+            </testResource>
+        </testResources>       
     </build>
 
 
@@ -133,7 +142,24 @@
             <artifactId>powermock-api-mockito</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
-        </dependency>       
+        </dependency>
+        <dependency>
+            <groupId>org.kubek2k</groupId>
+            <artifactId>springockito</artifactId>
+            <version>1.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kubek2k</groupId>
+            <artifactId>springockito-annotations</artifactId>
+            <version>1.0.9</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 </project>

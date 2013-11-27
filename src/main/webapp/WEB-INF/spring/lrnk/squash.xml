@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    
+    <!-- todo make all this more springy -->
+
+    <util:list id="allVenueDays" value-type="uk.co.lrnk.squash.domain.VenueDay">
+        <ref bean="typicalBrixtonWeekday"/> 
+        <ref bean="typicalCrystalPalaceWeekday"/> 
+        <ref bean="typicalBridgeWeekday"/> 
+    </util:list>
+    
+    <bean id="typicalBrixtonWeekday" class="uk.co.lrnk.squash.domain.VenueDay">
+        <property name="venueName" value="Brixton"/>
+        <property name="sessions">
+            <util:list id="myList" value-type="uk.co.lrnk.squash.domain.Session">
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1700-1740"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1740-1820"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1820-1900"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1900-1940"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1940-2020"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2020-2100"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2100-2140"/>
+                </bean>
+            </util:list>                        
+        </property>
+    </bean>
+
+    <bean id="typicalCrystalPalaceWeekday" class="uk.co.lrnk.squash.domain.VenueDay">
+        <property name="venueName" value="Crystal Palace"/>
+        <property name="sessions">
+            <util:list id="myList" value-type="uk.co.lrnk.squash.domain.Session">
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1720-1800"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1800-1840"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1840-1920"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1920-2000"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2000-2040"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2040-2120"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2120-2200"/>
+                </bean>
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="typicalBridgeWeekday" class="uk.co.lrnk.squash.domain.VenueDay">
+        <property name="venueName" value="Bridge Leisure Centre, Sydenham"/>
+        <property name="sessions">
+            <util:list id="myList" value-type="uk.co.lrnk.squash.domain.Session">
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1720-1800"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1800-1840"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1840-1920"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="1920-2000"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2000-2040"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2040-2120"/>
+                </bean>
+                <bean class="uk.co.lrnk.squash.domain.Session">
+                    <property name="time" value="2120-2200"/>
+                </bean>
+            </util:list>
+        </property>
+    </bean>
+
+</beans>
