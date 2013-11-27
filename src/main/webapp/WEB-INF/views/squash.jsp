@@ -7,22 +7,37 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
     <script src="resources/js/squash.js"></script>
-    
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="resources/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
-    <title>Let's all have a lovely game of squash</title>
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="resources/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <title>Squash planner</title>
 
 </head>
 <body>
-<div id="content">
-    <h1>Squash time</h1>
+<div class="container">
+    <h1>Let's all have a lovely game of squash</h1>
     <div ng-controller="SquashCtrl">
 
-        <p ng-repeat="day in squashDays">
-            {{day.name}}
-        </p> 
-        
+        <div class="row" ng-repeat="day in squashDays">
+            <h3>{{prettifyDate(day.date)}}</h3>
+            <div class="col-sm-4" ng-repeat="venue in day.venues">                
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2">{{venue.venueName}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="session in venue.sessions">
+                            <td>{{session.time}}</td>
+                            <td>{{session.availableSlots}} courts remaining</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
 
