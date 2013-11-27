@@ -20,7 +20,7 @@ import java.util.List;
  * User: Laurie
  * Date: 25/11/13
  */
-@Controller("/squash")
+@Controller()
 public class SquashController {
 
 
@@ -30,7 +30,7 @@ public class SquashController {
     @Autowired
     List<VenueDay> allTypicalWeekdays;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/squash-data", method = RequestMethod.GET)
     @ResponseBody
     public List<Day> getCourtAvailability() {
                 
