@@ -1,5 +1,6 @@
 package uk.co.lrnk.squash.domain;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,6 +10,7 @@ import java.util.List;
 public class Day {
     
     String name;
+    Date date;
     List<VenueDay> venues;
 
     public String getName() {
@@ -17,6 +19,14 @@ public class Day {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public List<VenueDay> getVenues() {
