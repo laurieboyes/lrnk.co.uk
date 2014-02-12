@@ -17,6 +17,7 @@
     </bean>
     
     <mvc:view-controller path="/squash" view-name="squash"/>
+    <mvc:view-controller path="/chart-scraper" view-name="squash"/>
 
     <bean id="jsonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
