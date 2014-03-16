@@ -26,5 +26,7 @@
     </bean>
 
     <mvc:resources mapping="/resources/**" location="WEB-INF/resources/"/>
+    
+    <mvc:resources mapping="/melonjstutorial/**" location="WEB-INF/melonjstutorial/"/>
 
 </beans>
