@@ -16451,19 +16451,26 @@ var game = {
 
     // Run on game resources loaded.
     "loaded": function () {
+        
+        
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
+        // set a global fading transition for the screen
+        me.state.transition("fade", "#FFFFFF", 250);
+
         // add our player entity in the entity pool
         me.entityPool.add("mainPlayer", game.PlayerEntity);
+        me.entityPool.add("CoinEntity", game.CoinEntity);
+        me.entityPool.add("EnemyEntity", game.EnemyEntity);
 
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
         me.input.bindKey(me.input.KEY.X, "jump", true);
 
-        // start the game 
-        me.state.change(me.state.PLAY);
+        // display the menu title
+        me.state.change(me.state.MENU);
     }
 };
 
@@ -16475,6 +16482,19 @@ game.resources = [
 	 */
     {name: "area01_level_tiles",  type:"image", src: "data/img/map/area01_level_tiles.png"},
     {name: "gripe_run_right", type:"image", src: "data/img/sprite/gripe_run_right.png"},
+    // the parallax background
+    {name: "area01_bkg0",         type:"image", src: "data/img/area01_bkg0.png"},
+    {name: "area01_bkg1",         type:"image", src: "data/img/area01_bkg1.png"},
+
+    {name: "area02_bkg0",         type:"image", src: "data/img/area02_bkg0.png"},
+    
+    // the spinning coin spritesheet
+    {name: "spinning_coin_gold",  type:"image", src: "data/img/sprite/spinning_coin_gold.png"},
+    // our enemy entity
+    {name: "wheelie_right",       type:"image", src: "data/img/sprite/wheelie_right.png"},
+
+    // game font
+    {name: "32x32_font",          type:"image", src: "data/img/font/32x32_font.png"},
 
 	/* Atlases 
 	 * @example
@@ -16486,17 +16506,28 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
-    {name: "area01", type: "tmx", src: "data/map/area01.tmx"}
+    {name: "area01", type: "tmx", src: "data/map/area01.tmx"},
+    {name: "area02", type: "tmx", src: "data/map/area02.tmx"},
 
 	/* Background music. 
 	 * @example
 	 * {name: "example_bgm", type: "audio", src: "data/bgm/", channel : 1},
-	 */	
+	 */
+    {name: "dst-inertexponent", type: "audio", src: "data/bgm/", channel : 1},
 
 	/* Sound effects. 
 	 * @example
 	 * {name: "example_sfx", type: "audio", src: "data/sfx/", channel : 2}
 	 */
+    {name: "cling", type: "audio", src: "data/sfx/", channel : 2},
+    {name: "stomp", type: "audio", src: "data/sfx/", channel : 1},
+    {name: "jump",  type: "audio", src: "data/sfx/", channel : 1},
+    
+    
+    
+    
+    {name: "title_screen",  type: "image", src: "data/img/gui/title_screen.png", channel : 1}
+    
 ];
 
 
@@ -16527,7 +16558,7 @@ game.HUD.Container = me.ObjectContainer.extend({
 		this.name = "HUD";
 		
 		// add our child score object at the top left corner
-		this.addChild(new game.HUD.ScoreItem(5, 5));
+		this.addChild(new game.HUD.ScoreItem(630, 440));
 	}
 });
 
@@ -16543,8 +16574,12 @@ game.HUD.ScoreItem = me.Renderable.extend({
 		
 		// call the parent constructor 
 		// (size does not matter here)
-		this.parent(new me.Vector2d(x, y), 10, 10); 
-		
+		this.parent(new me.Vector2d(x, y), 10, 10);
+
+        // create a font
+        this.font = new me.BitmapFont("32x32_font", 32);
+        this.font.set("right");
+        
 		// local copy of the global score
 		this.score = -1;
 
@@ -16569,7 +16604,7 @@ game.HUD.ScoreItem = me.Renderable.extend({
 	 * draw the score
 	 */
 	draw : function (context) {
-		// draw it baby !
+        this.font.draw (context, game.data.score, this.pos.x, this.pos.y);
 	}
 
 });
@@ -16628,12 +16663,36 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 this.vel.y = -this.maxVel.y * me.timer.tick;
                 // set the jumping flag
                 this.jumping = true;
+                // play some audio 
+                me.audio.play("jump");
             }
 
         }
 
         // check & update player movement
         this.updateMovement();
+
+        // check for collision
+        var res = me.game.collide(this);
+        if (res) {
+            // if we collide with an enemy
+            if (res.obj.type == me.game.ENEMY_OBJECT) {
+                // check if we jumped on it
+                if ((res.y > 0) && ! this.jumping) {
+                    // bounce (force jump)
+                    this.falling = false;
+                    this.vel.y = -this.maxVel.y * me.timer.tick;
+                    // set the jumping flag
+                    this.jumping = true;
+                    // play some audio
+                    me.audio.play("stomp");
+
+                } else {
+                    // let's flicker in case we touched an enemy
+                    this.renderable.flicker(45);
+                }
+            }
+        }
 
         // update animation if necessary
         if (this.vel.x!=0 || this.vel.y!=0) {
@@ -16648,12 +16707,120 @@ game.PlayerEntity = me.ObjectEntity.extend({
     }
 
 });
+
+
+/*----------------
+ a Coin entity
+ ------------------------ */
+game.CoinEntity = me.CollectableEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function(x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+    },
+
+    // this function is called by the engine, when
+    // an object is touched by something (here collected)
+    onCollision: function() {
+
+        // play a "coin collected" sound
+        me.audio.play("cling");
+        
+        // give some score
+        game.data.score += 250;
+        
+        // make sure it cannot be collected "again"
+        this.collidable = false;
+        // remove it
+        me.game.remove(this);
+    }
+
+});
+
+
+/* --------------------------
+ an enemy Entity
+ ------------------------ */
+game.EnemyEntity = me.ObjectEntity.extend({
+    init: function(x, y, settings) {
+        // define this here instead of tiled
+        settings.image = "wheelie_right";
+        settings.spritewidth = 64;
+
+        // call the parent constructor
+        this.parent(x, y, settings);
+
+        this.startX = x;
+        this.endX = x + settings.width - settings.spritewidth;
+        // size of sprite
+
+        // make him start from the right
+        this.pos.x = x + settings.width - settings.spritewidth;
+        this.walkLeft = true;
+
+        // walking & jumping speed
+        this.setVelocity(4, 6);
+
+        // make it collidable
+        this.collidable = true;
+        // make it a enemy object
+        this.type = me.game.ENEMY_OBJECT;
+
+    },
+
+    // call by the engine when colliding with another object
+    // obj parameter corresponds to the other object (typically the player) touching this one
+    onCollision: function(res, obj) {
+
+        // res.y >0 means touched by something on the bottom
+        // which mean at top position for this one
+        if (this.alive && (res.y > 0) && obj.falling) {
+            this.renderable.flicker(45);
+        }
+    },
+
+    // manage the enemy movement
+    update: function() {
+        // do nothing if not in viewport
+        if (!this.inViewport)
+            return false;
+
+        if (this.alive) {
+            if (this.walkLeft && this.pos.x <= this.startX) {
+                this.walkLeft = false;
+            } else if (!this.walkLeft && this.pos.x >= this.endX) {
+                this.walkLeft = true;
+            }
+            // make it walk
+            this.flipX(this.walkLeft);
+            this.vel.x += (this.walkLeft) ? -this.accel.x * me.timer.tick : this.accel.x * me.timer.tick;
+
+        } else {
+            this.vel.x = 0;
+        }
+
+        // check and update movement
+        this.updateMovement();
+
+        // update animation if necessary
+        if (this.vel.x!=0 || this.vel.y!=0) {
+            // update object animation
+            this.parent();
+            return true;
+        }
+        return false;
+    }
+});
 game.PlayScreen = me.ScreenObject.extend({
 	/**
 	 *  action to perform on state change
 	 */
 	onResetEvent: function() {
 
+        // play the audio track
+        me.audio.playTrack("DST-InertExponent");
+        
         // load a level
         me.levelDirector.loadLevel("area01");
         
@@ -16672,22 +16839,95 @@ game.PlayScreen = me.ScreenObject.extend({
 	onDestroyEvent: function() {
 		// remove the HUD from the game world
 		me.game.world.removeChild(this.HUD);
+
+        // stop the current audio track
+        me.audio.stopTrack();
 	}
 });
 
+/*----------------------
+  
+     A title screen
+  
+   ----------------------*/
+
 game.TitleScreen = me.ScreenObject.extend({
-	/**	
-	 *  action to perform on state change
-	 */
-	onResetEvent: function() {	
-		; // TODO
-	},
-	
-	
-	/**	
-	 *  action to perform when leaving this screen (state change)
-	 */
-	onDestroyEvent: function() {
-		; // TODO
-	}
+    // constructor
+    init: function() {
+        this.parent(true);
+
+        // title screen image
+        this.title = null;
+
+        this.font = null;
+        this.scrollerfont = null;
+        this.scrollertween = null;
+
+        this.scroller = "A SMALL STEP BY STEP TUTORIAL FOR GAME CREATION WITH MELONJS       ";
+        this.scrollerpos = 600;
+    },
+
+    // reset function
+    onResetEvent: function() {
+        if (this.title == null) {
+            // init stuff if not yet done
+            this.title = me.loader.getImage("title_screen");
+            // font to display the menu items
+            this.font = new me.BitmapFont("32x32_font", 32);
+
+            // set the scroller
+            this.scrollerfont = new me.BitmapFont("32x32_font", 32);
+
+        }
+
+        // reset to default value
+        this.scrollerpos = 640;
+
+        // a tween to animate the arrow
+        this.scrollertween = new me.Tween(this).to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+
+        // enable the keyboard
+        me.input.bindKey(me.input.KEY.ENTER, "enter", true);
+
+        // play something
+        me.audio.play("cling");
+
+    },
+
+    // some callback for the tween objects
+    scrollover: function() {
+        // reset to default value
+        this.scrollerpos = 640;
+        this.scrollertween.to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+    },
+
+    // update function
+    update: function() {
+        // enter pressed ?
+        if (me.input.isKeyPressed('enter')) {
+            me.state.change(me.state.PLAY);
+        }
+        return true;
+    },
+
+    // draw function
+    draw: function(context) {
+        context.drawImage(this.title, 0, 0);
+
+        this.font.draw(context, "PRESS ENTER TO PLAY", 20, 240);
+        this.scrollerfont.draw(context, this.scroller, this.scrollerpos, 440);
+    },
+
+    // destroy function
+    onDestroyEvent: function() {
+        me.input.unbindKey(me.input.KEY.ENTER);
+
+        //just in case
+        this.scrollertween.stop();
+    }
+
 });
