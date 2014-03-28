@@ -11,6 +11,7 @@ public class ChartEntry {
     String weeks;
     String title;
     String artist;
+    String changeThisWeek;
 
     public String getPosition() {
         return position;
@@ -50,5 +51,13 @@ public class ChartEntry {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getChangeThisWeek() {
+        return changeThisWeek;
+    }
+
+    public void setChangeThisWeek(String changeThisWeek) {
+        this.changeThisWeek = changeThisWeek;
     }
 }

@@ -28,6 +28,7 @@
         <th>Weeks</th>
         <th>Artist</th>
         <th>Title</th>
+        <th>Change this week</th>
     </tr>
     </thead>
     <tbody>
@@ -38,6 +39,7 @@
             <td>${entry.weeks}</td>
             <td>${entry.artist}</td>
             <td>${entry.title}</td>
+            <td>${entry.changeThisWeek}</td>
         </tr>
     </c:forEach>
 

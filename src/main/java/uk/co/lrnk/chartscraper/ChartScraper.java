@@ -32,6 +32,12 @@ public class ChartScraper {
             entry.setArtist(entryElement.getElementsByClass("infoHolder").get(0).getElementsByTag("h4").text());
             entry.setTitle(entryElement.getElementsByClass("infoHolder").get(0).getElementsByTag("h3").text());
 
+            try{
+                entry.setChangeThisWeek("" + (Integer.parseInt(entry.getPosition()) - Integer.parseInt(entry.getLastWeek())));    
+            } catch (NumberFormatException e) {
+                entry.setChangeThisWeek("NEW");
+            }
+                        
             entryList.add(entry);
 
         }
