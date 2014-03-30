@@ -4,8 +4,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +47,23 @@ public class ChartScraper {
         }
         
         return entryList;
+    }
+    
+    public void writeCSV(List<ChartEntry> chartEntries, Writer writer) throws IOException {
+        ICsvBeanWriter beanWriter = null;
+        try {
+            beanWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
+            beanWriter.writeHeader("Position", "Last Week", "Weeks", "Artist", "Title", "Change This Week");
+
+            for (ChartEntry chartEntry : chartEntries) {
+                beanWriter.write(chartEntry, "position", "lastWeek", "weeks", "artist", "title", "changeThisWeek");
+            }
+
+        } finally {
+            if (beanWriter != null) {
+                beanWriter.close();
+            }
+        }
+        
     }
 }
