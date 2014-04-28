@@ -28,5 +28,7 @@
     <mvc:resources mapping="/resources/**" location="WEB-INF/resources/"/>
     
     <mvc:resources mapping="/melonjstutorial/**" location="WEB-INF/melonjstutorial/"/>
+    
+    <mvc:resources mapping="/ludumdare29/**" location="WEB-INF/ludumdare29/"/>
 
 </beans>

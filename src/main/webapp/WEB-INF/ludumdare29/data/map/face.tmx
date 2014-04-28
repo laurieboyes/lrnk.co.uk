@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="40" tilewidth="16" tileheight="16">
+ <objectgroup name="faceimage" width="30" height="40">
+  <object name="face" x="0" y="0" width="480" height="640"/>
+ </objectgroup>
+</map>
