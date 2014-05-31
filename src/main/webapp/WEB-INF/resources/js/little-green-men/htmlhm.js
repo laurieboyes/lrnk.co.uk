@@ -256,9 +256,9 @@ function resumeTimers() {
 
 sounds = new Array();
 
-sounds["jump"] = new Audio("/resources/audio/little-green-men/jump.wav");
+sounds["jump"] = new Audio("resources/audio/little-green-men/jump.wav");
 
-sounds["shootm"] = new Audio("/resources/audio/little-green-men/shootm.wav");
+sounds["shootm"] = new Audio("resources/audio/little-green-men/shootm.wav");
 
 
 
@@ -412,7 +412,7 @@ spriteSheet.onload = function (){
 
 };
 
-spriteSheet.src = "/resources/images/little-green-men/spritesheetBig.png";
+spriteSheet.src = "resources/images/little-green-men/spritesheetBig.png";
 
 
 
@@ -428,7 +428,7 @@ backdrop.onload = function (){
 
 //background images used with permission from Paul Bourke: http://paulbourke.net/miscellaneous/mars128/
 
-backdrop.src = "/resources/images/little-green-men/backdrop2.png";
+backdrop.src = "resources/images/little-green-men/backdrop2.png";
 
 
 
