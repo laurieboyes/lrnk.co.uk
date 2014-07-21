@@ -1,0 +1,24 @@
+body {
+    background: #999;
+    text-align: center;
+}
+
+.controls {
+    width: 600px;
+    margin: auto;
+    text-align: left;
+}
+
+.show-if {
+    display: none;
+}
+
+.show-if.pen.pen-selected {
+    display: inline;
+}
+
+.show-if.ellipse.ellipse-selected {
+    display: inline;
+}
+
+
